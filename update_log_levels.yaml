@@ -1,0 +1,31 @@
+- hosts: masters
+  become: yes
+
+  tasks:
+  - name: copy over master config
+    copy:
+      src: /home/quicklab/master.env
+      dest: /etc/origin/master/master.env
+      owner: root
+      group: root
+      mode: '0644'
+
+  - name: copy over node config
+    copy:
+      src: /home/quicklab/atomic-openshift-node
+      dest: /etc/sysconfig/atomic-openshift-node
+      owner: root
+      group: root
+      mode: '0644'
+
+  - name: restart master api
+    shell: /usr/local/bin/master-restart api
+    ignore_errors: yes
+
+  - name: restart master controllers
+    shell: /usr/local/bin/master-restart controllers
+    ignore_errors: yes
+
+  - name: restart node service
+    shell: systemctl restart atomic-openshift-node
+
