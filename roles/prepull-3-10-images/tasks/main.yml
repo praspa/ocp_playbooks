@@ -1,0 +1,34 @@
+- name: pull master images
+  command: bash -c "{{ item }}"
+  async: 2400
+  poll: 30
+  with_items:
+  - docker pull registry.access.redhat.com/rhel7/etcd:3.2.22
+  - docker pull registry.access.redhat.com/openshift3/ose-control-plane:v3.10
+  when: inventory_hostname is groups['masters']
+
+- name: pull node images
+  command: bash -c "{{ item }}"
+  async: 2400
+  poll: 30
+  with_items:
+      - docker pull registry.access.redhat.com/openshift3/ose-node:v3.10
+      - docker pull registry.access.redhat.com/openshift3/ose-web-console:v3.10
+      - docker pull registry.access.redhat.com/openshift3/ose-pod:v3.10
+  when: inventory_hostname is groups['nodes']
+
+- name: pull registry images
+  command: bash -c "{{ item }}"
+  async: 2400
+  poll: 30
+  with_items:
+      - docker pull registry.access.redhat.com/openshift3/ose-docker-registry:v3.10
+  when: inventory_hostname is groups['infr']
+
+- name: pull router images
+  command: bash -c "{{ item }}"
+  async: 2400
+  poll: 30
+  with_items:
+      - docker pull registry.access.redhat.com/openshift3/ose-haproxy-router:v3.10
+  when: inventory_hostname is groups['infr']
