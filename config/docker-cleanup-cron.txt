@@ -1,0 +1,2 @@
+#run every hour 7 days a week
+0 * * * * * myuser /bin/bash  /home/myuser/scripts/docker_clean_up.sh > /dev/null 2>&1
