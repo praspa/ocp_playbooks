@@ -1,9 +1,6 @@
 # Playbook to pre-pull all ocp images on all ocp nodes
 # Based on disconnected install documentation:
 # https://access.redhat.com/documentation/en-us/openshift_container_platform/3.11/html/installing_clusters/install-config-install-disconnected-install
-- vars:
-    ocp_general_tag: "v3.11.161"
-    ocp_etcd_tag: "3.2.22"
 
 - name: pull node images
   command: bash -c "{{ item }}"

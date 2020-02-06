@@ -1,4 +1,6 @@
 - hosts: all
+  become: yes
+  become_method: sudo
   serial: 18
   roles:
   - prepull-3-11-images
