@@ -4,6 +4,7 @@
 
 - name: perform docker login
   command: bash -c "docker login https://registry.redhat.io -u {{ rh_user }} -p {{ rh_password }}"
+  no_log: True
 
 - name: pull node images
   command: bash -c "{{ item }}"
