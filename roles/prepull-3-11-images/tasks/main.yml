@@ -2,6 +2,9 @@
 # Based on disconnected install documentation:
 # https://access.redhat.com/documentation/en-us/openshift_container_platform/3.11/html/installing_clusters/install-config-install-disconnected-install
 
+- name: perform docker login
+  command: bash -c "docker login https://registry.redhat.io -u {{ rh_user }} -p {{ rh_password }}"
+
 - name: pull node images
   command: bash -c "{{ item }}"
   async: 2400
