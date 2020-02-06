@@ -1,0 +1,4 @@
+- hosts: all
+  serial: 18
+  roles:
+  - prepull-3-11-images
