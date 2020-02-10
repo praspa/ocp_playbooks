@@ -1,0 +1,17 @@
+- name: refresh subscription manager
+  command: subscription-manager refresh
+  when: inventory_hostname in groups['nodes']
+
+- name: disable 3.10 repos and enable 3.11 repos and enable ansible 2.8
+  command: subscription-manager repos --disable="rhel-7-server-ose-3.10-rpms" --disable="rhel-7-server-ansible-2.4-rpms" --enable="rhel-7-server-ose-3.11-rpms" --enable="rhel-7-server-rpms" --enable="rhel-7-server-extras-rpms" --enable="rhel-7-server-ansible-2.8-rpms"
+  when: inventory_hostname in groups['nodes']
+
+- name: clean yum
+  command: yum clean all
+  when: inventory_hostname in groups['nodes']
+
+# master is my build node
+- name: upgrade openshift-ansible on build node
+  command: yum update -y openshift-ansible
+  when: inventory_hostname in groups['masters'][0]
+
