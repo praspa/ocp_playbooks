@@ -1,6 +1,10 @@
 ---
 ocp_general_tag: "v3.11.161"
 ocp_etcd_tag: "3.2.22"
+ocp_rhgs_block_prov: "3.11.4-7"
+ocp_rhgs_volmanager: "3.11.4-9"
+ocp_rhgs_server: "3.11.4-19"
+ocp_rhgs_s3_server: "3.11.4-8"
 rh_user: "foo"
 rh_password: "bar"
   

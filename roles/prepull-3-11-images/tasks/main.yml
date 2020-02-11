@@ -79,8 +79,9 @@
     - docker pull "registry.redhat.io/openshift3/prometheus:{{ ocp_general_tag }}"
     - docker pull "registry.redhat.io/openshift3/prometheus-alertmanager:{{ ocp_general_tag }}"
     - docker pull "registry.redhat.io/openshift3/prometheus-node-exporter:{{ ocp_general_tag }}"
-    - docker pull registry.redhat.io/rhgs3/rhgs-server-rhel7
-    - docker pull registry.redhat.io/rhgs3/rhgs-volmanager-rhel7
-    - docker pull registry.redhat.io/rhgs3/rhgs-gluster-block-prov-rhel7
-    - docker pull registry.redhat.io/rhgs3/rhgs-s3-server-rhel7
+    - docker pull "registry.redhat.io/rhgs3/rhgs-server-rhel7:{{ ocp_rhgs_block_prov }}"
+    - docker pull "registry.redhat.io/rhgs3/rhgs-volmanager-rhel7:{{ ocp_rhgs_volmanager }}"
+    - docker pull "registry.redhat.io/rhgs3/rhgs-gluster-block-prov-rhel7:{{ ocp_rhgs_block_prov }}"
+    - docker pull "registry.redhat.io/rhgs3/rhgs-s3-server-rhel7:{{ ocp_rhgs_s3_server }}"
+
 
