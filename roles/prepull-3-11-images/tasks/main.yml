@@ -3,85 +3,63 @@
 # https://access.redhat.com/documentation/en-us/openshift_container_platform/3.11/html/installing_clusters/install-config-install-disconnected-install
 
 - name: perform docker login
-  command: bash -c "docker login https://registry.redhat.io -u {{ rh_user }} -p {{ rh_password }}"
-  no_log: True
+  docker_login:
+    username: "{{ rh_user }}"
+    password: "{{ rh_password }}"
+    registry_url: "https://registry.redhat.io"
 
-- name: pull node images
-  command: bash -c "{{ item }}"
-  async: 2400
-  poll: 30
-  with_items:
-    - docker pull "registry.redhat.io/openshift3/apb-base:{{ ocp_general_tag }}"
-    - docker pull "registry.redhat.io/openshift3/apb-tools:{{ ocp_general_tag }}"
-    - docker pull "registry.redhat.io/openshift3/automation-broker-apb:{{ ocp_general_tag }}"
-    - docker pull "registry.redhat.io/openshift3/csi-attacher:{{ ocp_general_tag }}"
-    - docker pull "registry.redhat.io/openshift3/csi-driver-registrar:{{ ocp_general_tag }}"
-    - docker pull "registry.redhat.io/openshift3/csi-livenessprobe:{{ ocp_general_tag }}"
-    - docker pull "registry.redhat.io/openshift3/csi-provisioner:{{ ocp_general_tag }}"
-    - docker pull "registry.redhat.io/openshift3/grafana:{{ ocp_general_tag }}"
-    - docker pull "registry.redhat.io/openshift3/local-storage-provisioner:{{ ocp_general_tag }}"
-    - docker pull "registry.redhat.io/openshift3/manila-provisioner:{{ ocp_general_tag }}"
-    - docker pull "registry.redhat.io/openshift3/mariadb-apb:{{ ocp_general_tag }}"
-    - docker pull "registry.redhat.io/openshift3/mediawiki:{{ ocp_general_tag }}"
-    - docker pull "registry.redhat.io/openshift3/mediawiki-apb:{{ ocp_general_tag }}"
-    - docker pull "registry.redhat.io/openshift3/mysql-apb:{{ ocp_general_tag }}"
-    - docker pull "registry.redhat.io/openshift3/ose-ansible-service-broker:{{ ocp_general_tag }}"
-    - docker pull "registry.redhat.io/openshift3/ose-cli:{{ ocp_general_tag }}"
-    - docker pull "registry.redhat.io/openshift3/ose-cluster-autoscaler:{{ ocp_general_tag }}"
-    - docker pull "registry.redhat.io/openshift3/ose-cluster-capacity:{{ ocp_general_tag }}"
-    - docker pull "registry.redhat.io/openshift3/ose-cluster-monitoring-operator:{{ ocp_general_tag }}"
-    - docker pull "registry.redhat.io/openshift3/ose-console:{{ ocp_general_tag }}"
-    - docker pull "registry.redhat.io/openshift3/ose-configmap-reloader:{{ ocp_general_tag }}"
-    - docker pull "registry.redhat.io/openshift3/ose-control-plane:{{ ocp_general_tag }}"
-    - docker pull "registry.redhat.io/openshift3/ose-deployer:{{ ocp_general_tag }}"
-    - docker pull "registry.redhat.io/openshift3/ose-descheduler:{{ ocp_general_tag }}"
-    - docker pull "registry.redhat.io/openshift3/ose-docker-builder:{{ ocp_general_tag }}"
-    - docker pull "registry.redhat.io/openshift3/ose-docker-registry:{{ ocp_general_tag }}"
-    - docker pull "registry.redhat.io/openshift3/ose-efs-provisioner:{{ ocp_general_tag }}"
-    - docker pull "registry.redhat.io/openshift3/ose-egress-dns-proxy:{{ ocp_general_tag }}"
-    - docker pull "registry.redhat.io/openshift3/ose-egress-http-proxy:{{ ocp_general_tag }}"
-    - docker pull "registry.redhat.io/openshift3/ose-egress-router:{{ ocp_general_tag }}"
-    - docker pull "registry.redhat.io/openshift3/ose-haproxy-router:{{ ocp_general_tag }}"
-    - docker pull "registry.redhat.io/openshift3/ose-hyperkube:{{ ocp_general_tag }}"
-    - docker pull "registry.redhat.io/openshift3/ose-hypershift:{{ ocp_general_tag }}"
-    - docker pull "registry.redhat.io/openshift3/ose-keepalived-ipfailover:{{ ocp_general_tag }}"
-    - docker pull "registry.redhat.io/openshift3/ose-kube-rbac-proxy:{{ ocp_general_tag }}"
-    - docker pull "registry.redhat.io/openshift3/ose-kube-state-metrics:{{ ocp_general_tag }}"
-    - docker pull "registry.redhat.io/openshift3/ose-metrics-server:{{ ocp_general_tag }}"
-    - docker pull "registry.redhat.io/openshift3/ose-node:{{ ocp_general_tag }}"
-    - docker pull "registry.redhat.io/openshift3/ose-node-problem-detector:{{ ocp_general_tag }}"
-    - docker pull "registry.redhat.io/openshift3/ose-operator-lifecycle-manager:{{ ocp_general_tag }}"
-    - docker pull "registry.redhat.io/openshift3/ose-ovn-kubernetes:{{ ocp_general_tag }}"
-    - docker pull "registry.redhat.io/openshift3/ose-pod:{{ ocp_general_tag }}"
-    - docker pull "registry.redhat.io/openshift3/ose-prometheus-config-reloader:{{ ocp_general_tag }}"
-    - docker pull "registry.redhat.io/openshift3/ose-prometheus-operator:{{ ocp_general_tag }}"
-    - docker pull "registry.redhat.io/openshift3/ose-recycler:{{ ocp_general_tag }}"
-    - docker pull "registry.redhat.io/openshift3/ose-service-catalog:{{ ocp_general_tag }}"
-    - docker pull "registry.redhat.io/openshift3/ose-template-service-broker:{{ ocp_general_tag }}"
-    - docker pull "registry.redhat.io/openshift3/ose-tests:{{ ocp_general_tag }}"
-    - docker pull "registry.redhat.io/openshift3/ose-web-console:{{ ocp_general_tag }}"
-    - docker pull "registry.redhat.io/openshift3/postgresql-apb:{{ ocp_general_tag }}"
-    - docker pull "registry.redhat.io/openshift3/registry-console:{{ ocp_general_tag }}"
-    - docker pull "registry.redhat.io/openshift3/snapshot-controller:{{ ocp_general_tag }}"
-    - docker pull "registry.redhat.io/openshift3/snapshot-provisioner:{{ ocp_general_tag }}"
-    - docker pull "registry.redhat.io/rhel7/etcd:{{ ocp_etcd_tag }}"
-    - docker pull "registry.redhat.io/openshift3/metrics-cassandra:{{ ocp_general_tag }}"
-    - docker pull "registry.redhat.io/openshift3/metrics-hawkular-metrics:{{ ocp_general_tag }}"
-    - docker pull "registry.redhat.io/openshift3/metrics-hawkular-openshift-agent:{{ ocp_general_tag }}"
-    - docker pull "registry.redhat.io/openshift3/metrics-heapster:{{ ocp_general_tag }}"
-    - docker pull "registry.redhat.io/openshift3/metrics-schema-installer:{{ ocp_general_tag }}"
-    - docker pull "registry.redhat.io/openshift3/oauth-proxy:{{ ocp_general_tag }}"
-    - docker pull "registry.redhat.io/openshift3/ose-logging-curator5:{{ ocp_general_tag }}"
-    - docker pull "registry.redhat.io/openshift3/ose-logging-elasticsearch5:{{ ocp_general_tag }}"
-    - docker pull "registry.redhat.io/openshift3/ose-logging-eventrouter:{{ ocp_general_tag }}"
-    - docker pull "registry.redhat.io/openshift3/ose-logging-fluentd:{{ ocp_general_tag }}"
-    - docker pull "registry.redhat.io/openshift3/ose-logging-kibana5:{{ ocp_general_tag }}"
-    - docker pull "registry.redhat.io/openshift3/prometheus:{{ ocp_general_tag }}"
-    - docker pull "registry.redhat.io/openshift3/prometheus-alertmanager:{{ ocp_general_tag }}"
-    - docker pull "registry.redhat.io/openshift3/prometheus-node-exporter:{{ ocp_general_tag }}"
-    - docker pull "registry.redhat.io/rhgs3/rhgs-server-rhel7:{{ ocp_rhgs_block_prov }}"
-    - docker pull "registry.redhat.io/rhgs3/rhgs-volmanager-rhel7:{{ ocp_rhgs_volmanager }}"
-    - docker pull "registry.redhat.io/rhgs3/rhgs-gluster-block-prov-rhel7:{{ ocp_rhgs_block_prov }}"
-    - docker pull "registry.redhat.io/rhgs3/rhgs-s3-server-rhel7:{{ ocp_rhgs_s3_server }}"
+- name: pull ocp images set 1
+  docker_image:
+    name: "registry.redhat.io/openshift3/{{ item }}:{{ ocp_general_tag }}"
+  with_items: "{{ ocp3_images_1 }}"
 
+- name: pull ocp images set 2
+  docker_image:
+    name: "registry.redhat.io/openshift3/{{ item }}:{{ ocp_general_tag }}"
+  with_items: "{{ ocp3_images_2 }}"
+
+- name: pull ocp images set 3
+  docker_image:
+    name: "registry.redhat.io/openshift3/{{ item }}:{{ ocp_general_tag }}"
+  with_items: "{{ ocp3_images_3 }}"
+
+- name: pull ocp images set 4
+  docker_image:
+    name: "registry.redhat.io/openshift3/{{ item }}:{{ ocp_general_tag }}"
+  with_items: "{{ ocp3_images_4 }}"
+
+- name: pull ocp images set 5
+  docker_image:
+    name: "registry.redhat.io/openshift3/{{ item }}:{{ ocp_general_tag }}"
+  with_items: "{{ ocp3_images_5 }}"
+
+- name: pull ocp images set 6
+  docker_image:
+    name: "registry.redhat.io/openshift3/{{ item }}:{{ ocp_general_tag }}"
+  with_items: "{{ ocp3_images_6 }}"
+
+- name: pull ocp images set 7
+  docker_image:
+    name: "registry.redhat.io/openshift3/{{ item }}:{{ ocp_general_tag }}"
+  with_items: "{{ ocp3_images_7 }}"
+
+- name: pull etcd
+  docker_image:
+    name: "registry.redhat.io/rhel7/etcd:{{ ocp_etcd_tag }}"
+
+- name: pull glusterfs
+  docker_image:
+    name: "registry.redhat.io/rhgs3/rhgs-server-rhel7:{{ ocp_rhgs_server }}"
+
+- name: pull heketi 
+  docker_image:
+    name: "registry.redhat.io/rhgs3/rhgs-volmanager-rhel7:{{ ocp_rhgs_volmanager }}"
+
+- name: pull gluster block provisioner
+  docker_image:
+    name: "registry.redhat.io/rhgs3/rhgs-gluster-block-prov-rhel7:{{ ocp_rhgs_block_prov }}" 
+
+- name: pull gluster s3
+  docker_image:
+    name: "registry.redhat.io/rhgs3/rhgs-s3-server-rhel7:{{ ocp_rhgs_s3_server }}"
 
